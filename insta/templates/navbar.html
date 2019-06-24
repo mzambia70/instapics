@@ -1,0 +1,58 @@
+<nav id="nav" class="navbar sticky-top navbar-expand-lg navbar-light">
+    <div class="container">
+        <div class="col-md-4" style='display:flex;'>
+            <img src="../../static/images/main.png" width='20%' height="10%">
+            <a class="navbar-brand" href="{% url 'home' %}" style='font-size: 275%'> <em>instapics</em> </a>
+        </div>
+        <div class="col-md-4" style="margin-left: 5%; margin-right: -3%;">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form action="{% url 'search' %}" role="search" class="form-inline  my-2 my-lg-0">
+                    <input id="searchUp" class="form-control" name="user" type="text" placeholder="Search User"
+                        aria-label="Search">
+                </form>
+
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <a class="itens"><i class="far fa-compass"></i></a>
+                <a class="iten"><i class="far fa-heart"></i></a>
+                <a class="ite" href="{% url 'profile' %}"><i class="far fa-user"></i></a>
+                {% if user.is_authenticated %}
+                <ul>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown"><i class="fas fa-user-cog" style='margin-top:60%;'></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{%url 'image'%}">Add Image</a>
+                            </li>
+                            <li>
+                                <a href="/accounts/password/change">Change Password</a>
+                            </li>
+                            <li>
+                                <a href="/logout">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                {% else %}
+                <li>
+                    <a class='btn btn-default' href="/accounts/login"><i class="fas fa-sign-in-alt"
+                            style='margin-left:40%;'></i></a>
+                </li>
+
+                {% endif %}
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+</nav>

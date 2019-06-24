@@ -1,0 +1,125 @@
+{%extends 'base.html'%}
+{%load bootstrap4%}
+{%block content%}
+<header>
+
+    <div class="container">
+
+        <div class="profile">
+
+            <div class="profile-image">
+
+                <img src="{{profile.profile_pic.url}}">
+
+            </div>
+
+            <div class="profile-user-settings">
+
+                <h1 class="profile-user-name">{{user}}</h1>
+                <form class="form-group" action="{% url 'follow' user.id %}" method="post">
+                    {%csrf_token%}
+                    {%bootstrap_form form%}
+                    <button type="submit" class="btn profile-edit-btn">Follow </button>
+
+                </form>
+            </div>
+
+            <div class="profile-stats">
+
+                <ul>
+                    <li><span class="profile-stat-count">{{photos|length}}</span> posts</li>
+                    <li><span class="profile-stat-count">{{user.followers}}</span> followers</li>
+                    <li><span class="profile-stat-count">{{user.following}}</span> following</li>
+                </ul>
+
+            </div>
+
+            <div class="profile-bio">
+
+                <p><span class="profile-real-name">{{user}}</span> {{profile.bio}}</p>
+
+            </div>
+
+        </div>
+        <!-- End of profile section -->
+
+    </div>
+    <!-- End of container -->
+
+</header>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<main>
+
+    <div class="container">
+
+        <div class="gallery">
+            {% if photos %}
+            {% for photo in photos %}
+
+            <div class="gallery-item" tabindex="0" data-toggle="modal" data-target="#exampleModalScrollable">
+
+                <img src="{{photo.image_path.url}}" class="gallery-image">
+
+                <div class="gallery-item-info">
+
+                    <ul>
+                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i
+                                class="fas fa-heart" aria-hidden="true"></i> {{photo.likes}}</li>
+                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i
+                                class="fas fa-comment" aria-hidden="true"></i> {{photo.comments|length}}</li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalScrollableTitle" aria-hidden="true" style="margin-top: 200px">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">{{user}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="{{photo.image_path.url}}" class="image-fluid" data-toggle="modal"
+                                data-target="#exampleModalScrollable">
+                        </div>
+                        <div class="modal-footer">
+                            <h4>{{photo.caption}}</h4>
+                            <h5 class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i
+                                    class="fas fa-heart" aria-hidden="true"></i> {{photo.likes}}</h5>
+                            <h5 class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i
+                                    class="fas fa-comment" aria-hidden="true"></i> {{photo.comments|length}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="alert">
+            <h2 class="alert alert-info animated fadeIn"> No photos uploaded yet</h2>
+        </div>
+        {% endif %}
+        <!-- End of gallery -->
+
+    </div>
+    <!-- End of container -->
+
+</main>
+{%endblock%}

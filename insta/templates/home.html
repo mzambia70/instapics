@@ -1,0 +1,93 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            {%for image in images%}
+            {% for person in people %}
+            {% if image.main_user == person.user_to or image.main_user == current_user%}
+            <div id="car" class="card cardz">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="profile-image">
+                            <img src="{{image.profile.profile_pic.url}}" class="imgs">
+                        </div>
+                        <h3 style='margin-top:1%;'>{{image.main_user}}</h3>
+                    </div>
+                </div>
+                <div class="card-">
+                    <div class="main-image">
+                        <img class="img-fluid" src="{{image.image_path.url}}" width="100%">
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="likes">
+                        <i>{{image.likes}} likes</i>
+
+                    </div>
+                    <p>posted {{image.upload_date|timesince}} ago</p>
+                    <div class="section row" style='padding:1%'>
+                        <form class="form-group" action="{%url 'like' image.id%}" method="post"
+                            enctype="multipart/form-data">
+                            {%csrf_token%}
+                            {%bootstrap_form form%}
+                            <button class="btn btn-primary" type="submit" name="button"><i
+                                    class="fas fa-heart"></i></button>
+                        </form>
+                        <a href="{% url 'comment' image.id %}"><button class="btn btns btn-info" type="button"
+                                name="button"><i class="fas fa-comment"></i></button></a>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            {%endif%}
+            {%endfor%}
+            {%endfor%}
+
+        </div>
+        <div class="col-md-4 responsive ">
+            <div class="row">
+                <div class="card" style=" ">
+                    <div class="card-header">
+                        Suggestions for you
+                    </div>
+                    {% if users %}
+                    {% for user in users %}
+                    <div class="contain">
+
+                        <div class="profile">
+
+                            <div class="profile-image">
+
+                                <img src="{{user.profile_pic.url}}" style='margin-left:10%; width:50%'>
+
+                            </div>
+
+                            <div class="profile-user-settings sugg">
+
+                                <p class="profile-user-name">{{user}}</p>
+
+                                <a href="{% url 'otherprofile' user.id %}"><button class="btn profile-edit-btn">Visit
+                                        Profile</button> </a>
+
+                            </div>
+
+                        </div>
+                        <hr>
+                        <!-- End of profile section -->
+
+                    </div>
+                    <!-- End of container -->
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{%endblock%}

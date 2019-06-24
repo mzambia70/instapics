@@ -1,0 +1,61 @@
+{%extends 'base.html'%}
+{%load bootstrap4%}
+{%block content%}
+<div class="container ">
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-7 contain">
+            <div class="">
+                <div id="card" class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="profile-image">
+                                <img src="{{image.profile.profile_pic.url}}" class="imgz">
+                            </div>
+                            <h3 style='margin-top:2%;'>{{image.main_user}}</h3>
+                        </div>
+                    </div>
+                    <div class="card-">
+                        <div class="">
+                            <img class="img-fluid" src="{{image.image_path.url}}" width="100%">
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div>
+                            <i>{{image.likes}} likes</i>
+                            <p>posted {{image.upload_date|timesince}} ago</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <form class="form-group" action="/comment/{{image.id}}/" name="{{image.id}}" method="post"
+                    enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {%bootstrap_form form%}
+                    <button class="btn btns btn-info" type="submit" name="button">Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="logi">
+
+            <h1>Comments</h1>
+            {%if comments%}
+            {%for comment in comments%}
+            <span id="span"><strong>{{comment.main_user}}...</strong></span><span class="font"> {{comment.comment}}
+            </span><br><br>
+            {%endfor%}
+            {%else%}
+            <div class="alert">
+                <p class="alert alert-info animated fadeIn">Post has No comments yet</p>
+            </div>
+            {%endif%}
+            <br>
+        </div>
+    </div>
+</div>
+{%endblock%}
