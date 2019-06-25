@@ -262,3 +262,4 @@ def follow(request,user_id):
 
     return render(request,"otherProfile.html",{"user":user,'profile':profile,"photos":photos,"form":form})
 
+
