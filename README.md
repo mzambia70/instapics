@@ -22,6 +22,7 @@ This is a clone of the already existing instagram app that allows one to follow 
 * Install all the requirements found in requirements file.
 * On your terminal run `python manage.py runserver`
 * Access the live site using the local host provided
+https://mzinstapics.herokuapp.com
 
 
 ## Known Bugs
